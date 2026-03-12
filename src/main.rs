@@ -37,7 +37,7 @@ const DEFAULT_AVAILABLE_TO: u16 = 3999;
 const DEFAULT_AVAILABLE_COUNT: usize = 12;
 const RELEASE_HISTORY_LIMIT: usize = 8;
 const CAPTURE_LIMIT: usize = 64 * 1024;
-const DEFAULT_EXPORT_FILENAME: &str = "portmap-dashboard.json";
+const DEFAULT_EXPORT_FILENAME: &str = "portledger-dashboard.json";
 const DASHBOARD_MOVE_WAIT: Duration = Duration::from_secs(12);
 const QUICK_ACTION_OLD_AFTER: Duration = Duration::from_secs(2 * 60 * 60);
 
@@ -86,7 +86,8 @@ static PROJECT_MARKERS: &[&str] = &[
 
 #[derive(Parser, Debug)]
 #[command(
-    name = "portmap",
+    name = "port",
+    bin_name = "port",
     version,
     about = "Persistent visual map of what's running on which ports"
 )]
@@ -107,7 +108,7 @@ enum Commands {
     Release(ReleaseArgs),
     /// Run a command, detect port conflicts, and offer stale-port cleanup
     Run(RunArgs),
-    /// Print shell helpers for wrapping dev commands with portmap
+    /// Print shell helpers for wrapping dev commands with port
     Hook(HookArgs),
 }
 
@@ -521,26 +522,26 @@ fn cmd_hook(args: HookArgs) -> Result<ExitCode> {
         Shell::Bash | Shell::Zsh => {
             println!(
                 r#"pmrun() {{
-  command portmap run -- "$@"
+  command port run -- "$@"
 }}
 
 pmport() {{
   local port="$1"
   shift
-  command portmap run --port "$port" -- "$@"
+  command port run --port "$port" -- "$@"
 }}"#
             );
         }
         Shell::Fish => {
             println!(
                 r#"function pmrun
-  command portmap run -- $argv
+  command port run -- $argv
 end
 
 function pmport
   set -l port $argv[1]
   set -e argv[1]
-  command portmap run --port $port -- $argv
+  command port run --port $port -- $argv
 end"#
             );
         }
@@ -594,7 +595,7 @@ fn maybe_resolve_conflict(
 
     println!();
     println!(
-        "Portmap left port {} alone because it does not look stale. Use `portmap release {}` if you want to stop it manually.",
+        "Portledger left port {} alone because it does not look stale. Use `port release {}` if you want to stop it manually.",
         port, port
     );
     Ok(false)
@@ -1066,7 +1067,7 @@ fn save_state(state: &StateFile) -> Result<()> {
 fn state_file_path() -> Result<PathBuf> {
     let base =
         dirs::data_local_dir().ok_or_else(|| anyhow!("could not determine data directory"))?;
-    Ok(base.join("portmap").join("state.json"))
+    Ok(base.join("portledger").join("state.json"))
 }
 
 fn merge_state(state: &mut StateFile, active: &[PortSnapshot]) {
@@ -2291,8 +2292,8 @@ fn spawn_moved_process(
     let child = command
         .current_dir(cwd)
         .env("PORT", to_port.to_string())
-        .env("PORTMAP_OLD_PORT", from_port.to_string())
-        .env("PORTMAP_NEW_PORT", to_port.to_string())
+        .env("PORTLEDGER_OLD_PORT", from_port.to_string())
+        .env("PORTLEDGER_NEW_PORT", to_port.to_string())
         .stdin(Stdio::null())
         .stdout(Stdio::null())
         .stderr(Stdio::null())
@@ -2475,7 +2476,7 @@ fn build_dashboard_lines(
 
     let mut lines = Vec::with_capacity(height);
     lines.push(format!(
-        "portmap dashboard  ports:{}  processes:{}  stale:{}  projects:{}",
+        "portledger dashboard  ports:{}  processes:{}  stale:{}  projects:{}",
         summary.ports, summary.processes, summary.stale, summary.projects
     ));
     lines.push(format!(

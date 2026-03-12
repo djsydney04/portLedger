@@ -5,7 +5,7 @@ const path = require("path");
 const { spawnSync } = require("child_process");
 
 const root = path.resolve(__dirname, "..");
-const binaryName = process.platform === "win32" ? "portmap.exe" : "portmap";
+const binaryName = process.platform === "win32" ? "portledger.exe" : "portledger";
 const sourceBinary = path.join(root, "target", "release", binaryName);
 const destDir = path.join(root, "bin", "native");
 const destBinary = path.join(destDir, binaryName);
@@ -18,7 +18,7 @@ const build = spawnSync(cargo, ["build", "--release"], {
 
 if (build.error) {
   if (build.error.code === "ENOENT") {
-    console.error("Rust toolchain not found. Install cargo to build the native portmap binary.");
+    console.error("Rust toolchain not found. Install cargo to build the native portledger binary.");
   } else {
     console.error(build.error.message);
   }

@@ -1,6 +1,6 @@
-# portmap
+# portledger
 
-`portmap` keeps a persistent map of which local project owns which TCP port, shows which ports are free, and helps clean up stale dev servers before retrying your command.
+`portledger` keeps a persistent map of which local project owns which TCP port, shows which ports are free, and helps clean up stale dev servers before retrying your command.
 
 ## What it does
 
@@ -12,25 +12,25 @@
 
 ## Install
 
-`portmap` builds its Rust binary during `npm install`, so the machine needs a Rust toolchain.
+`portledger` builds its Rust binary during `npm install`, so the machine needs a Rust toolchain.
 
 Install in your project root (`<your-repo>/`) so everyone can run it with `npx`:
 
 ```bash
 cd <your-repo>
-npm install --save-dev portmap
+npm install --save-dev portledger
 ```
 
 Then run it from that same project root:
 
 ```bash
-npx portmap
+npx port
 ```
 
 Optional global install:
 
 ```bash
-npm install -g portmap
+npm install -g portledger
 ```
 
 If you are developing from this repo directly, install from the repo root:
@@ -61,28 +61,28 @@ Required repository secret:
 ## Commands
 
 ```bash
-portmap
-portmap map
-portmap map --interactive
-portmap map --plain
-portmap map --all
-portmap status 3000
-portmap available --from 3000 --to 3100
-portmap release 3000
-portmap run --port 3000 -- npm run dev
-portmap run -- npm run dev
+port
+port map
+port map --interactive
+port map --plain
+port map --all
+port status 3000
+port available --from 3000 --to 3100
+port release 3000
+port run --port 3000 -- npm run dev
+port run -- npm run dev
 ```
 
 ## Dashboard view
 
-Running `portmap` (with no args) opens the interactive dashboard.
-`portmap map` prints one-shot output unless you pass `--interactive`.
+Running `port` (with no args) opens the interactive dashboard.
+`port map` prints one-shot output unless you pass `--interactive`.
 
 - Use `Up` and `Down` to inspect sessions.
 - Type commands in the bottom command box and press `Enter`.
 - Use `?` or `F1` to toggle the in-app command menu.
 - `Ctrl+C` quits the dashboard.
-- Use `portmap map --plain` when you want the original plain table output.
+- Use `port map --plain` when you want the original plain table output.
 
 Supported dashboard commands:
 
@@ -105,7 +105,7 @@ Supported dashboard commands:
 - `clear` to reset filter and sort defaults
 - `open`
 - `open 3000`
-- `download` to export the current snapshot to `./portmap-dashboard.json`
+- `download` to export the current snapshot to `./portledger-dashboard.json`
 - `download reports/ports.json` to write an export relative to the current root
 - `select 3000`
 - `refresh`
@@ -121,17 +121,17 @@ Detail rows include PPID, TTY, first/last seen timestamps, project root, working
 Generate wrapper functions:
 
 ```bash
-eval "$(portmap hook zsh)"
+eval "$(port hook zsh)"
 ```
 
 That adds:
 
-- `pmrun <command...>` to run a command through `portmap run`
+- `pmrun <command...>` to run a command through `port run`
 - `pmport <port> <command...>` to preflight a specific port before running the command
 
 ## Stale-port heuristic
 
-`portmap` currently marks a listener as stale when either:
+`portledger` currently marks a listener as stale when either:
 
 - its working directory no longer exists, or
 - it looks like an orphaned dev server, has no terminal, is parented by pid `1`, and has been alive longer than the configured threshold
@@ -140,13 +140,13 @@ That adds:
 
 State is written to:
 
-- macOS/Linux: `~/.local/share/portmap/state.json` when `XDG_DATA_HOME` is unset
+- macOS/Linux: `~/.local/share/portledger/state.json` when `XDG_DATA_HOME` is unset
 
 The exact base path follows the platform data directory returned by the Node/Rust environment.
 
 ## Open source
 
-`portmap` is open source and community-driven. Issues, ideas, and pull requests are welcome.
+`portledger` is open source and community-driven. Issues, ideas, and pull requests are welcome.
 
 ## Contributing
 
