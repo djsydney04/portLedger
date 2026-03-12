@@ -4,7 +4,8 @@
 
   "description": "Persistent visual map of local ports, stale listeners, and project ownership",
   "bin": {
-    "port": "bin/port.cjs"
+    "port": "bin/port.cjs",
+    "portledger": "bin/port.cjs"
   },
   "files": [
     "bin",
@@ -34,5 +35,8 @@
   "cpu": [
     "x64",
     "arm64"
-  ]
+  ],
+  "dependencies": {
+    "portledger": "^0.3.0"
+  }
 }
