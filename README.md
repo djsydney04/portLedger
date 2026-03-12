@@ -14,7 +14,28 @@ It is written in Rust and wrapped as an npm-installable CLI.
 
 ## Install
 
-This package currently builds the Rust binary during `npm install`, so the machine needs a Rust toolchain.
+`portmap` builds its Rust binary during `npm install`, so the machine needs a Rust toolchain.
+
+Install in your project root (`<your-repo>/`) so everyone can run it with `npx`:
+
+```bash
+cd <your-repo>
+npm install --save-dev portmap
+```
+
+Then run it from that same project root:
+
+```bash
+npx portmap
+```
+
+Optional global install:
+
+```bash
+npm install -g portmap
+```
+
+If you are developing from this repo directly, install from the repo root:
 
 ```bash
 npm install -g .
