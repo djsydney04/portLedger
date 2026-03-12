@@ -2,8 +2,6 @@
 
 `portmap` keeps a persistent map of which local project owns which TCP port, shows which ports are free, and helps clean up stale dev servers before retrying your command.
 
-It is written in Rust and wrapped as an npm-installable CLI.
-
 ## What it does
 
 - Scans local listening TCP ports and groups them by project root.
