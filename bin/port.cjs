@@ -5,7 +5,7 @@ const path = require("path");
 const { spawnSync } = require("child_process");
 
 const root = path.resolve(__dirname, "..");
-const binaryName = process.platform === "win32" ? "portmap.exe" : "portmap";
+const binaryName = process.platform === "win32" ? "portledger.exe" : "portledger";
 const binaryPath = path.join(root, "bin", "native", binaryName);
 const installer = path.join(root, "scripts", "install.js");
 

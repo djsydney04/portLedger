@@ -1,9 +1,9 @@
 {
-  "name": "portmap",
+  "name": "portledger",
   "version": "0.1.0",
   "description": "Persistent visual map of local ports, stale listeners, and project ownership",
   "bin": {
-    "portmap": "bin/portmap.cjs"
+    "port": "bin/port.cjs"
   },
   "files": [
     "bin",

@@ -3,7 +3,7 @@
   "packages": {
     ".": {
       "release-type": "node",
-      "package-name": "portmap",
+      "package-name": "portledger",
       "extra-files": [
         {
           "type": "toml",
