@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "Persistent visual map of local ports, stale listeners, and project ownership",
   "bin": {
+    "cockpit": "bin/port.cjs",
     "port": "bin/port.cjs",
     "cli-cockpit": "bin/port.cjs",
     "portledger": "bin/port.cjs"

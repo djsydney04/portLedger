@@ -6,13 +6,13 @@
 
 ```bash
 npm i cli-cockpit
-npx port
+npx cockpit
 ```
 
 Or run a dev server with conflict handling:
 
 ```bash
-npx port run -- npm run dev
+npx cockpit run -- npm run dev
 ```
 
 ## What it does
@@ -40,8 +40,9 @@ npm i cli-cockpit
 Then run it from that same project root:
 
 ```bash
-npx port
+npx cockpit
 npx cli-cockpit
+npx port
 ```
 
 Optional global install:
@@ -61,19 +62,19 @@ npm install -g .
 1. Start the dashboard:
 
 ```bash
-npx port
+npx cockpit
 ```
 
 2. If your app needs a specific port, preflight and run:
 
 ```bash
-npx port run --port 3000 -- npm run dev
+npx cockpit run --port 3000 -- npm run dev
 ```
 
 3. If a stale process is blocking a port, release it:
 
 ```bash
-npx port release 3000
+npx cockpit release 3000
 ```
 
 ## Release flow
@@ -98,33 +99,34 @@ Required repository secret:
 ## Commands
 
 ```bash
-port
+cockpit
 cli-cockpit
-npx port
+npx cockpit
 npx cli-cockpit
-port map
-port dashboard
+npx port
+cockpit map
+cockpit dashboard
 port cockpit
-port map --interactive
-port map --plain
-port map --all
-port status 3000
-port inspect 3000
-port available --from 3000 --to 3100
-port free --from 3000 --to 3100
-port release 3000
-port kill 3000
-port run --port 3000 -- npm run dev
-port exec --port 3000 -- npm run dev
-port run -- npm run dev
+cockpit map --interactive
+cockpit map --plain
+cockpit map --all
+cockpit status 3000
+cockpit inspect 3000
+cockpit available --from 3000 --to 3100
+cockpit free --from 3000 --to 3100
+cockpit release 3000
+cockpit kill 3000
+cockpit run --port 3000 -- npm run dev
+cockpit exec --port 3000 -- npm run dev
+cockpit run -- npm run dev
 ```
 
 ## Dashboard view
 
-Running `port` (with no args) opens the interactive cockpit.
-`cli-cockpit` is an alias for the same command.
-Top-level aliases also work (for example `port dashboard`, `port free`, and `port kill`).
-`port map` prints one-shot output unless you pass `--interactive`.
+Running `cockpit` (with no args) opens the interactive cockpit.
+`cli-cockpit` and `port` are aliases for the same command.
+Top-level aliases also work (for example `cockpit dashboard`, `cockpit free`, and `cockpit kill`).
+`cockpit map` prints one-shot output unless you pass `--interactive`.
 The cockpit has two views:
 
 - `Ports` for the existing port map and session controls.
@@ -155,7 +157,7 @@ The cockpit has two views:
 - Type commands in the bottom command box and press `Enter`.
 - Use `?` or `F1` to toggle the in-app command menu.
 - `Ctrl+C` quits the dashboard.
-- Use `port map --plain` when you want the original plain table output.
+- Use `cockpit map --plain` when you want the original plain table output.
 
 Supported dashboard commands:
 
@@ -241,12 +243,12 @@ Port detail rows include PPID, TTY, first/last seen timestamps, project root, wo
 Generate wrapper functions:
 
 ```bash
-eval "$(port hook zsh)"
+eval "$(cockpit hook zsh)"
 ```
 
 That adds:
 
-- `pmrun <command...>` to run a command through `port run`
+- `pmrun <command...>` to run a command through `cockpit run`
 - `pmport <port> <command...>` to preflight a specific port before running the command
 
 ## Stale-port heuristic
@@ -266,7 +268,7 @@ The exact base path follows the platform data directory returned by the Node/Rus
 
 ## Upgrade prompts
 
-When a newer npm release is available, `port` and `cli-cockpit` now ask a simple yes/no question before launching the binary:
+When a newer npm release is available, `cockpit`, `port`, and `cli-cockpit` ask a simple yes/no question before launching the binary:
 
 ```bash
 cli-cockpit 0.x.y is available (current 0.a.b). Upgrade this project now? [Y/n]

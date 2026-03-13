@@ -93,12 +93,12 @@ static PROJECT_MARKERS: &[&str] = &[
 
 #[derive(Parser, Debug)]
 #[command(
-    name = "port",
-    bin_name = "port",
+    name = "cockpit",
+    bin_name = "cockpit",
     version,
     about = "Port and worktree cockpit for local development",
-    long_about = "Port and worktree cockpit for local development.\n\nRunning `port` with no command opens the interactive dashboard.",
-    after_help = "Examples:\n  port                              Open the interactive dashboard\n  port dashboard                    Open the interactive dashboard via explicit command\n  port map --plain                  Print one-shot table output\n  port status 3000                  Inspect one port and owner history\n  port free --from 3000 --to 3100   Show likely free ports\n  port kill 3000                    Release a busy port\n  port run --port 3000 -- npm run dev"
+    long_about = "Port and worktree cockpit for local development.\n\nRunning `cockpit` with no command opens the interactive dashboard.",
+    after_help = "Examples:\n  cockpit                              Open the interactive dashboard\n  cockpit dashboard                    Open the interactive dashboard via explicit command\n  cockpit map --plain                  Print one-shot table output\n  cockpit status 3000                  Inspect one port and owner history\n  cockpit free --from 3000 --to 3100   Show likely free ports\n  cockpit kill 3000                    Release a busy port\n  cockpit run --port 3000 -- npm run dev"
 )]
 struct Cli {
     #[command(subcommand)]
@@ -122,7 +122,7 @@ enum Commands {
     /// Run a command, detect port conflicts, and offer stale-port cleanup
     #[command(visible_aliases = ["exec", "wrap"])]
     Run(RunArgs),
-    /// Print shell helpers for wrapping dev commands with port
+    /// Print shell helpers for wrapping dev commands with cockpit
     #[command(visible_aliases = ["shell", "helpers"])]
     Hook(HookArgs),
 }
@@ -537,26 +537,26 @@ fn cmd_hook(args: HookArgs) -> Result<ExitCode> {
         Shell::Bash | Shell::Zsh => {
             println!(
                 r#"pmrun() {{
-  command port run -- "$@"
+  command cockpit run -- "$@"
 }}
 
 pmport() {{
   local port="$1"
   shift
-  command port run --port "$port" -- "$@"
+  command cockpit run --port "$port" -- "$@"
 }}"#
             );
         }
         Shell::Fish => {
             println!(
                 r#"function pmrun
-  command port run -- $argv
+  command cockpit run -- $argv
 end
 
 function pmport
   set -l port $argv[1]
   set -e argv[1]
-  command port run --port $port -- $argv
+  command cockpit run --port $port -- $argv
 end"#
             );
         }
@@ -610,7 +610,7 @@ fn maybe_resolve_conflict(
 
     println!();
     println!(
-        "Portledger left port {} alone because it does not look stale. Use `port release {}` if you want to stop it manually.",
+        "Portledger left port {} alone because it does not look stale. Use `cockpit release {}` if you want to stop it manually.",
         port, port
     );
     Ok(false)
